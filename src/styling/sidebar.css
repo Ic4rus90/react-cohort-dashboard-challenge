@@ -1,0 +1,54 @@
+/* Sidebar container */
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    width: 80px; /* Adjust width according to your design */
+    height: 100vh; /* Full height */
+    background-color: #f2f5fb; /* Light gray background */
+    padding: 20px;
+    align-items: center; /* Center items */
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Optional shadow for better effect */
+    /* float: left */
+  }
+  
+  /* Menu item styles */
+  .menu-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 40px; /* Space between items */
+    cursor: pointer;
+  }
+  
+  .menu-item span {
+    font-size: 14px;
+    color: #000046; /* Dark blue text color */
+    margin-top: 10px;
+  }
+  
+  /* Icon styles */
+  .icon {
+    width: 40px;
+    height: 40px;
+  }
+  
+  /* Profile section styles */
+  .profile-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: auto; /* Pushes profile to the bottom */
+  }
+  
+  .profile-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+  }
+  
+  .profile-section span {
+    font-size: 14px;
+    color: #000046; /* Dark blue text color */
+  }
+  
