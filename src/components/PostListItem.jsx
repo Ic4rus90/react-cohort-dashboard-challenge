@@ -1,39 +1,63 @@
 import axios from "axios"
-import { useEffect, useState } from "react"
-import PostList from "./PostList"
+import { useContext, useEffect, useState } from "react"
 import AddComment from "./AddComment"
 import '../styling/postlistitem.css'
 import Card from 'react-bootstrap/Card';
 import PostListComment from "./PostListComment"
+import Icon from "./profile/Icon"
+import { ContactContext } from "../App"
 
-const PostListItem = ({ post, id }) => {
+const PostListItem = ({ post }) => {
     const [comments, setComments] = useState([])
-    const [contact, setContact] = useState({})
+    const [contact, setContact] = useState({
+        "firstName": "",
+        "lastName": "",
+        "favouriteColor": ""
+    })
+
+    const { contacts } = useContext(ContactContext);
+
+    const id = post.id;
 
     useEffect(() => {
         axios
         .get(`https://boolean-uk-api-server.fly.dev/Ic4rus90/post/${id}/comment`)
-        .then(res => setComments(res.data))
+        .then(res => {
+            if (res.data) {
+                setComments(res.data)
+            } else {
+                console.error("No contact data received");
+            }
+        })
         .catch((err) => console.error("An error occurred when getting comments: ", err))
     }, [id])
 
 
     useEffect(() => { 
-        axios
-        .get(`https://boolean-uk-api-server.fly.dev/Ic4rus90/contact/${post.contactId}`)
-        .then(res => setContact(res.data))
-        .catch((err) => console.error("An error occurred when attempting to get contact: ", err))
-    }, [post]);
+        const contact = contacts.find((contact) => contact.id === post.contactId)
+        if (contact !== undefined) {
+            setContact(contact)
+        }
+    }, [post, contacts]);
 
     return (
             <Card >
               <Card.Body>
-                <Card.Title> {contact.firstName} {contact.lastName} </Card.Title>
-                <Card.Subtitle className="mb-2 text-muted" > {post.title} </Card.Subtitle>
-                <Card.Text >
+                <div className="d-flex align-items-center">  
+                    <Icon contact={contact}/> 
+                    <div className="ms-3">
+                        <Card.Title className="fw-bold mb-2">
+                            {contact.firstName} {contact.lastName}
+                        </Card.Title>
+                        <Card.Subtitle className="text-muted mb-2">
+                            {post.title}
+                        </Card.Subtitle>
+                    </div>
+                </div>
+                <Card.Text>
                   {post.content}
                 </Card.Text>
-                <ul className="d-flex flex-column" style={{ gap: '10px' }}>
+                <ul className="d-flex flex-column" style={{ gap: '2px' }}>
                     {comments.map((comment, i) => (
                             <PostListComment 
                             comment={comment} 

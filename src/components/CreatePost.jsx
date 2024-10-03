@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
-import { InputGroup, FormControl, Button } from 'react-bootstrap';
+import { InputGroup, FormControl, Button, Card } from 'react-bootstrap';
+import Icon from "./profile/Icon";
 
 const CreatePost = () => {
     const [post, setPost] = useState({
@@ -23,19 +24,26 @@ const CreatePost = () => {
     }
 
     return (
-        <InputGroup className="mb-3" >
-            <FormControl
-                style={{ backgroundColor: '#e6ebf5' }}
-                placeholder="What's on your mind?"
-                aria-label="Comment"
-                name="comment"
-                value={post.content}
-                onChange={handleChange}
-            />
-            <Button variant="primary" onClick={handleSubmit}>
-                Comment
-            </Button>
-        </InputGroup>
+        <Card>
+            <Card.Body>
+            <InputGroup className="mb-3" >
+                <InputGroup.Text>
+                    <Icon />
+                </InputGroup.Text>
+                <FormControl
+                    style={{ backgroundColor: '#e6ebf5' }}
+                    placeholder="What's on your mind?"
+                    aria-label="Comment"
+                    name="comment"
+                    value={post.content}
+                    onChange={handleChange}
+                />
+                <Button variant="primary" onClick={handleSubmit}>
+                    Comment
+                </Button>
+            </InputGroup>
+            </Card.Body>
+        </Card>
       );
 };
 

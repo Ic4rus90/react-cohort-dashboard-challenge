@@ -1,9 +1,10 @@
 import { useState } from 'react';
-import Form from 'react-bootstrap/Form';
 import AccountInfo from './profile/AccountInfo';
 import AddressInfo from './profile/AddressInfo';
 import ContactInfo from './profile/ContactInfo';
 import CompanyInfo from './profile/CompanyInfo';
+import { Col, Container, Row } from 'react-bootstrap';
+
 
 const Profile = () => {
     const [profileData, setProfileData] = useState({
@@ -29,23 +30,35 @@ const Profile = () => {
           [name]: value
         }));
       };
-      
+    
 
     return (
-        <div>
+      <Container>
+        <Row>
+          <Col>
             <AccountInfo 
-            handleChange={handleChange} 
-            profileData={profileData}/>
+              handleChange={handleChange} 
+              profileData={profileData}/>
+          </Col>
+          <Col>
             <AddressInfo
-            handleChange={handleChange} 
-            profileData={profileData}/>
+              handleChange={handleChange} 
+              profileData={profileData}/>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
             <ContactInfo
-            handleChange={handleChange} 
-            profileData={profileData}/>
+              handleChange={handleChange} 
+              profileData={profileData}/>
+          </Col>
+          <Col>
             <CompanyInfo
-            handleChange={handleChange} 
-            profileData={profileData}/>
-        </div>
+              handleChange={handleChange} 
+              profileData={profileData}/>
+          </Col>
+        </Row>
+    </Container>
     )
 }
 

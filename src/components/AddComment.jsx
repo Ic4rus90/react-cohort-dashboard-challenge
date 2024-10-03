@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
-import { InputGroup, FormControl, Button } from 'react-bootstrap';
+import { InputGroup, FormControl, Button, Card } from 'react-bootstrap';
+import Icon from "./profile/Icon";
 
 const AddComment = ({ id }) => {
     const [comment, setComment] = useState({
@@ -25,9 +26,12 @@ const AddComment = ({ id }) => {
 
     return (
         <InputGroup className="mb-3" >
+            <InputGroup.Text>
+                <Icon />
+            </InputGroup.Text>
             <FormControl
                 style={{ backgroundColor: '#e6ebf5' }}
-                placeholder="Add a comment..."
+                placeholder="Comment..."
                 aria-label="Comment"
                 name="comment"
                 value={comment.content}

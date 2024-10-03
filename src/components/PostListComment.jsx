@@ -1,18 +1,19 @@
 import Card from 'react-bootstrap/Card';
+import Icon from './profile/Icon';
 
 const PostListComment = ({ comment }) => {
 
     return (
-        <Card >
-            <Card.Body style={{ backgroundColor: '#e6ebf5' }}>
-                <Card.Title style={{ color: '#64648c' }}>
-                    Some name
-                </Card.Title>
-                <Card.Text style={{ color: '#64648c'}}>
-                    {comment.content}
-                </Card.Text>
+        <div className="d-flex align-items-start mb-3">
+        <Icon />
+
+        <Card className="ms-3" style={{ backgroundColor: '#e6ebf5', borderRadius: '10px' }}>
+            <Card.Body>
+            <Card.Title className="fw-bold mb-1"> Someone </Card.Title>
+            <Card.Text>{comment.content}</Card.Text>
             </Card.Body>
         </Card>
+        </div>
     )
 }
 

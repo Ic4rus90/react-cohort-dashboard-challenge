@@ -1,10 +1,16 @@
-
 .header {
     display: flex;
+    width: 100vw;
+    height: 80px;
     justify-content: space-between;
     align-items: center;
     padding: 10px 20px;
-    background-color: #000046; /* The dark blue background */
+    background-color: #000046;
+    
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    padding-bottom: 20px;
   }
   
   .header-left {
@@ -13,7 +19,7 @@
   }
   
   .logo {
-    height: 40px; /* Adjust according to your needs */
+    height: 40px;
     margin-right: 10px;
   }
   
@@ -26,17 +32,7 @@
   .header-right {
     display: flex;
     align-items: center;
-  }
-  
-  .avatar {
-    width: 40px;
-    height: 40px;
-    background-color: #64dc78; /* The green background for the avatar */
-    color: #000046; /* Dark text for the initials */
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-weight: bold;
+    color: white;
+    padding-right: 80px;
   }
   

@@ -7,11 +7,14 @@ import axios from 'axios'
 import Header from './components/Header'
 import Sidebar from './components/Sidebar'
 import Profile from './components/Profile';
+import { useContext } from 'react';
 
 const PostContext = createContext(null) 
- 
+const ContactContext = createContext(null) 
+
 function App() {
   const [posts, setPosts] = useState([])
+  const [contacts, setContacts] = useState([])
 
   useEffect(() => {
     axios
@@ -21,25 +24,38 @@ function App() {
       });
     }, [])
 
+  useEffect(() => {
+    axios
+    .get('https://boolean-uk-api-server.fly.dev/Ic4rus90/contact')
+    .then(res => {
+      setContacts(res.data);
+    })
+  })
+
+
+
   return (
     <PostContext.Provider value={{ posts, setPosts }}>
+      <ContactContext.Provider value={{ contacts, setContacts }}>
         <header>
-        <Header/>
-        <Sidebar />
+          <Header/>
+          <Sidebar />
         </header>
-      {/* Global components above*/}
-      <Routes>
-        <Route
-          path="/"
-          element={<Dashboard/>}
-        />
-        <Route
-          path="/profile"
-          element={<Profile/>}
+      <section className='main-content'>
+        <Routes>
+          <Route
+            path="/"
+            element={<Dashboard/>}
           />
-      </Routes>
+          <Route
+            path="/profile"
+            element={<Profile/>}
+            />
+        </Routes>
+      </section>
+      </ContactContext.Provider>
     </PostContext.Provider>
   )
 }
 
-export { App, PostContext}
+export { App, PostContext, ContactContext}
