@@ -5,7 +5,7 @@ import '../styling/postlistitem.css'
 import Card from 'react-bootstrap/Card';
 import PostListComment from "./PostListComment"
 import Icon from "./profile/Icon"
-import { ContactContext } from "../App"
+import { ContactContext, UserContext } from "../App"
 import { Link } from "react-router-dom";
 
 const PostListItem = ({ post }) => {
@@ -14,6 +14,7 @@ const PostListItem = ({ post }) => {
     const [viewAllComments, setViewAllComments] = useState(false);
 
     const { contacts } = useContext(ContactContext);
+    const { userDetails } = useContext(UserContext)
 
     // Find user who made the post. 
     useEffect(() => {
@@ -27,22 +28,31 @@ const PostListItem = ({ post }) => {
     
     // Retrieving comments to specific post. Don't see a better way of doing this.
     useEffect(() => {
-        if (contact && contact.id) {
-            axios
-                .get(`https://boolean-uk-api-server.fly.dev/Ic4rus90/post/${contact.id}/comment`)
-                .then(res => {
-                    if (res.data) {
-                        setComments(res.data);
-                    } else {
-                        console.error("No comments received");
-                    }
-                })
-                .catch(err => console.error("An error occurred when getting comments: ", err));
-        }
-    }, [contact]);
+        axios
+            .get(`https://boolean-uk-api-server.fly.dev/Ic4rus90/post/${post.id}/comment`)
+            .then(res => {
+                if (res.data) {
+                    setComments(res.data);
+                } else {
+                    console.error("No comments received");
+                }
+            })
+            .catch(err => console.error("An error occurred when getting comments: ", err));
+    }, [post]);
     
     if (!post || !contact) {
         return <div>Loading...</div>;
+    }
+
+    const handleDelete = () => {
+        axios
+        .delete(`https://boolean-uk-api-server.fly.dev/Ic4rus90/post/${post.id}`)
+        .then((res) => {
+            console.log("Comment successfully deleted", res);
+        })
+        .catch((err) => {
+            console.error("Error deleting comment", err);
+        })
     }
 
     const handleGetAllComments = () => {
@@ -68,6 +78,14 @@ const PostListItem = ({ post }) => {
                 <Card.Text>
                   {post.content}
                 </Card.Text>
+                    {post.contactId === userDetails.id ? 
+                        <div>
+                        <button>Edit post </button>
+                        <button onClick={handleDelete}>Delete post</button>
+                    </div>
+                    :
+                    <div> </div>    
+                }
                 <ul className="d-flex flex-column" style={{ gap: '2px' }}>
                 {comments.length < 4 || viewAllComments ? 
                     comments.map((comment, i) => (
@@ -88,7 +106,7 @@ const PostListItem = ({ post }) => {
                     </div>
                 }
                 </ul>
-                <AddComment id={contact.id} />
+                <AddComment postId={post.id} />
               </Card.Body>
             </Card>
           );

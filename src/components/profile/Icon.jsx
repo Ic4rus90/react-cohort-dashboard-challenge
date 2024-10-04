@@ -1,8 +1,7 @@
 import { Link } from "react-router-dom";
 
 const Icon = ({ contact }) => {  
-     
-    console.log(contact)
+    
     if (contact === null || contact === undefined) {
         return "...Loading"
     }

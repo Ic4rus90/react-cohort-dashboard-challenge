@@ -1,23 +1,30 @@
 import axios from "axios";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { InputGroup, FormControl, Button } from 'react-bootstrap';
 import Icon from "./profile/Icon";
 import { UserContext } from "../App";
 
-const AddComment = ({ id }) => {
+const AddComment = ({ postId }) => {
     const [comment, setComment] = useState({
-        "postId": "",
+        "postId": 0,
         "content": "",
         "contactId": 420
     })
 
     const { userDetails } = useContext(UserContext)
 
+    useEffect(() => {
+        setComment((previousComment) => ({
+            ...previousComment, 
+            postId: Number(postId),
+            contactId: userDetails.id
+        }));
+    }, [postId, userDetails]);
+
     const handleSubmit = () => {
         console.log(comment)
-        setComment({...comment, postId: Number(id)})
         axios
-        .post(`https://boolean-uk-api-server.fly.dev/Ic4rus90/post/${id}/comment`, comment)
+        .post(`https://boolean-uk-api-server.fly.dev/Ic4rus90/post/${postId}/comment`, comment)
         .then((res) => console.log(res))
         .catch((err) => console.error("An error occurred when posting post: ", err))
     }
@@ -25,6 +32,7 @@ const AddComment = ({ id }) => {
     const handleChange = (event) => {
         const value = event.target.value;
         setComment({...comment, content: value});
+        // setComment({...comment, contactId: userDetails.id});
     }
 
     return (
@@ -36,7 +44,7 @@ const AddComment = ({ id }) => {
                 style={{ backgroundColor: '#e6ebf5' }}
                 placeholder="Comment..."
                 aria-label="Comment"
-                name="comment"
+                name="content"
                 value={comment.content}
                 onChange={handleChange}
             />

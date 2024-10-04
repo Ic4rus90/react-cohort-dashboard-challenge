@@ -1,16 +1,15 @@
 import Card from 'react-bootstrap/Card';
 import Icon from './profile/Icon';
 import { useContext, useEffect, useState } from 'react';
-import { ContactContext } from '../App';
+import { ContactContext, UserContext } from '../App';
+import axios from 'axios';
 
 const PostListComment = ({ comment }) => {
-    const [contact, setContact] = useState({
-        "firstName": "A",
-        "lastName": "B",
-        "favouriteColor": "#c219a6"
-    })
+    const [contact, setContact] = useState(null)
 
     const { contacts } = useContext(ContactContext)
+
+    const { userDetails } = useContext(UserContext)
 
     useEffect(() => {
         const matchedContact = contacts.find((contact) => contact.id === comment.contactId);
@@ -22,6 +21,21 @@ const PostListComment = ({ comment }) => {
         }
     }, [contacts, comment, contact])
 
+    if (contact === null) {
+        return "Loading...";
+    }
+
+    const handleDelete = () => {
+        axios
+        .delete(`https://boolean-uk-api-server.fly.dev/Ic4rus90/post/${comment.postId}/comment/${comment.id}`)
+        .then((res) => {
+            console.log("Comment successfully deleted", res);
+        })
+        .catch((err) => {
+            console.error("Error deleting comment", err);
+        })
+    }
+
     return (
         <div className="d-flex align-items-start mb-3">
         <Icon contact={contact}/>
@@ -32,6 +46,15 @@ const PostListComment = ({ comment }) => {
                     {`${contact.firstName} ${contact.lastName}`}  
                 </Card.Title>
                 <Card.Text>{comment.content}</Card.Text>
+                {comment.contactId === userDetails.id ? 
+                <div>
+                    <button>Edit comment </button>
+                    <button onClick={handleDelete}>Delete comment</button>
+                </div>
+                :
+                <div></div>     
+            }
+                <Card.Text></Card.Text>
             </Card.Body>
         </Card>
         </div>
