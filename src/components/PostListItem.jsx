@@ -6,41 +6,44 @@ import Card from 'react-bootstrap/Card';
 import PostListComment from "./PostListComment"
 import Icon from "./profile/Icon"
 import { ContactContext } from "../App"
+import { Link } from "react-router-dom";
 
 const PostListItem = ({ post }) => {
     const [comments, setComments] = useState([])
-    const [contact, setContact] = useState({
-        "firstName": "",
-        "lastName": "",
-        "favouriteColor": "",
-        "id" : 0
-    })
+    const [contact, setContact] = useState(null) 
 
     const { contacts } = useContext(ContactContext);
 
     // Find user who made the post. 
-    useEffect(() => { 
-        const contact = contacts.find((contact) => contact.id === post.contactId)
-        if (contact !== undefined) {
-            setContact(contact)
+    useEffect(() => {
+        const findContact = contacts.find((contact) => contact.id === post.contactId);
+        if (findContact) {
+            setContact(findContact);
+        } else {
+            console.error(`No contact found with id ${post.contactId}`);
         }
     }, [post, contacts]);
+    
 
     // Retrieving comments to specific post. Don't see a better way of doing this.
     useEffect(() => {
-        axios
-        .get(`https://boolean-uk-api-server.fly.dev/Ic4rus90/post/${contact.id}/comment`)
-        .then(res => {
-            if (res.data) {
-                setComments(res.data)
-            } else {
-                console.error("No comments received");
-            }
-        })
-        .catch((err) => console.error("An error occurred when getting comments: ", err))
-    }, [contact])
-
-
+        if (contact && contact.id) {
+            axios
+                .get(`https://boolean-uk-api-server.fly.dev/Ic4rus90/post/${contact.id}/comment`)
+                .then(res => {
+                    if (res.data) {
+                        setComments(res.data);
+                    } else {
+                        console.error("No comments received");
+                    }
+                })
+                .catch(err => console.error("An error occurred when getting comments: ", err));
+        }
+    }, [contact]);
+    
+    if (!post || !contact) {
+        return <div>Loading...</div>;
+    }
 
     return (
             <Card>
@@ -52,7 +55,9 @@ const PostListItem = ({ post }) => {
                             {contact.firstName} {contact.lastName}
                         </Card.Title>
                         <Card.Subtitle className="text-muted mb-2">
-                            {post.title}
+                            <Link to={`/post/${post.id}`}>
+                                {post.title}
+                            </Link>
                         </Card.Subtitle>
                     </div>
                 </div>
@@ -72,32 +77,6 @@ const PostListItem = ({ post }) => {
             </Card>
           );
         }
-        /*
-        <li key={i}> {`Comment ${i}`}: {comment.content}</li>
 
-
-            <div className="post-container">
-                <div className="post-header">
-                    <div className='post-author-info'>
-                        <img className='profile-icon' src={contact.profileImage} />
-                        <p className='post-author'> 
-                            {contact.firstName} {contact.lastName} 
-                        </p>
-                        <p className='post-title'>
-                            {post.title}
-                        </p>
-                    </div>
-                </div>
-
-                <p className="post-content">{post.content}</p>
-
-                <ul>
-                    {comments.map((comment, i) => (
-                        <li key={i}> {`Comment ${i}`}: {comment.content}</li>
-                    ))}
-                </ul>
-                <AddComment id={id} />
-            </div>
-            */
 
 export default PostListItem

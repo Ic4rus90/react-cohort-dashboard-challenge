@@ -1,19 +1,7 @@
-const Icon = ({ contact }) => {
-    
-    let firstName = "";
-    let lastName = "";
-    let favouriteColor = "";
-
-    if (contact === undefined) {
-        console.log("undefined")
-        firstName = "Frank";
-        lastName = "Petter";
-        favouriteColor = "#000000"
-    } else {
-        firstName = contact.firstName;
-        lastName = contact.lastName;
-        favouriteColor = contact.favouriteColour;
-    }
+const Icon = ({ contact }) => {    
+    const firstName = contact.firstName;
+    const lastName = contact.lastName;
+    const favouriteColor = contact.favouriteColour;
 
     const initials = `${firstName.charAt(0)}${lastName.charAt(0)}`;
 
@@ -39,3 +27,4 @@ const Icon = ({ contact }) => {
 }
 
 export default Icon;
+

@@ -7,6 +7,8 @@ import axios from 'axios'
 import Header from './components/Header'
 import Sidebar from './components/Sidebar'
 import Profile from './components/Profile';
+import PostListItem from './components/PostListItem';
+import ViewPost from './components/ViewPost';
 
 const PostContext = createContext(null) 
 const ContactContext = createContext(null) 
@@ -69,6 +71,10 @@ function App() {
               <Route
                 path="/profile"
                 element={<Profile/>}
+                />
+              <Route
+                path="/post/:id"
+                element={<ViewPost />}
                 />
             </Routes>
           </section>

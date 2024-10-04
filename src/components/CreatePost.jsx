@@ -35,13 +35,13 @@ const CreatePost = () => {
                 <FormControl
                     style={{ backgroundColor: '#e6ebf5' }}
                     placeholder="What's on your mind?"
-                    aria-label="Comment"
-                    name="comment"
+                    aria-label="Post"
+                    name="post"
                     value={post.content}
                     onChange={handleChange}
                 />
                 <Button variant="primary" onClick={handleSubmit}>
-                    Comment
+                    Post
                 </Button>
             </InputGroup>
             </Card.Body>
