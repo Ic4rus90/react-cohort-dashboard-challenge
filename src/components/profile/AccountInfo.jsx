@@ -29,28 +29,39 @@ const AccountInfo = ({ handleChange, profileData}) => {
           />
         </Form.Group>
 
-        <Form.Group controlId="formUsername" className="mb-3">
-          <Form.Label>Username*</Form.Label>
+        <Form.Group controlId="formGender" className="mb-3">
+          <Form.Label>Gender*</Form.Label>
           <Form.Control 
           style={{ backgroundColor: '#e6ebf5' }}
           type="text"
-          name="username"
-          value={profileData.username} 
+          name="gender"
+          value={profileData.gender} 
           onChange={handleChange}
           />
         </Form.Group>
 
-        <Form.Group controlId="formUsername" className="mb-3">
-          <Form.Label>Username*</Form.Label>
+        <Form.Group controlId="formJobTitle" className="mb-3">
+          <Form.Label>Job title</Form.Label>
           <Form.Control 
           style={{ backgroundColor: '#e6ebf5' }}
           type="text"
-          name="username"
-          value={profileData.email} 
+          name="jobTitle"
+          value={profileData.jobTitle} 
           onChange={handleChange}
           />
         </Form.Group>
         
+        <Form.Group controlId="formFavouriteColour" className="mb-3">
+          <Form.Label>Favorite Color</Form.Label>
+          <Form.Control 
+          style={{ backgroundColor: '#e6ebf5' }}
+          type="text"
+          name="favouriteColour"
+          value={profileData.favouriteColour} 
+          onChange={handleChange}
+          />
+        </Form.Group>
+
       </Form>
     </Container>
     )

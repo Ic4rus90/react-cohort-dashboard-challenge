@@ -1,5 +1,11 @@
+import { Link } from "react-router-dom";
+
 const Icon = ({ contact }) => {  
      
+    console.log(contact)
+    if (contact === null || contact === undefined) {
+        return "...Loading"
+    }
     const firstName = contact.firstName;
     const lastName = contact.lastName;
     const favouriteColor = contact.favouriteColour;
@@ -21,11 +27,14 @@ const Icon = ({ contact }) => {
       };
 
     return (
-        <div style={avatarStyle}>
-            {initials}
+        <div>
+            <Link to={`/profile/${id}`}>
+                <div style={avatarStyle}>
+                    {initials}
+                </div>
+            </Link>
         </div>
     )
-
 }
 
 export default Icon;

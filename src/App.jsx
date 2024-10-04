@@ -7,7 +7,6 @@ import axios from 'axios'
 import Header from './components/Header'
 import Sidebar from './components/Sidebar'
 import Profile from './components/Profile';
-import PostListItem from './components/PostListItem';
 import ViewPost from './components/ViewPost';
 
 const PostContext = createContext(null) 
@@ -17,30 +16,14 @@ const UserContext = createContext(null)
 function App() {
   const [posts, setPosts] = useState([])
   const [contacts, setContacts] = useState([])
-  const [userDetails, setUserDetails] = useState(
-    {
-      "firstName": "Ayana",
-      "lastName": "Upton",
-      "username": "AyanaU",
-      "email": "Lenny_Hammes@gmail.com",
-      "street": "Street 1",
-      "suite": "No",
-      "favouriteColour": "#19c257", 
-      "city": "Unknown",
-      "zipCode": "1234",
-      "phone": "911",
-      "website": "none",
-      "companyName": "Evil inc",
-      "companyCatchPhrase": "We eat you",
-      "businessStatement": "We enjoy css"
-    }
-  )
+  const [userDetails, setUserDetails] = useState(null)
 
   useEffect(() => {
     axios
     .get('https://boolean-uk-api-server.fly.dev/Ic4rus90/post')
     .then(res => {
-        setPosts(res.data.reverse()); 
+        const data = res.data;
+        setPosts(data.reverse());
       });
     }, [])
 
@@ -48,10 +31,12 @@ function App() {
     axios
     .get('https://boolean-uk-api-server.fly.dev/Ic4rus90/contact')
     .then(res => {
-      setContacts(res.data);
+      const data = res.data;
+      setContacts(data);
+      const firstUser = data.find((d) => d.id === 1)
+      setUserDetails(firstUser); 
     })
-  })
-
+  }, [])
 
 
   return (
@@ -75,6 +60,10 @@ function App() {
               <Route
                 path="/post/:id"
                 element={<ViewPost />}
+                />
+              <Route
+                path="/profile/:id"
+                element={<Profile/>}
                 />
             </Routes>
           </section>

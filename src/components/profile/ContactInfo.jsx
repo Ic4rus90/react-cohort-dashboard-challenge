@@ -7,24 +7,13 @@ const ContactInfo = ({ handleChange, profileData}) => {
         <Container className="mt-4">
       <h3>Contact info</h3>
       <Form>
-        <Form.Group controlId="formPhone" className="mb-3">
-          <Form.Label>Street</Form.Label>
+        <Form.Group controlId="formEmail" className="mb-3">
+          <Form.Label>Email*</Form.Label>
           <Form.Control 
           style={{ backgroundColor: '#e6ebf5' }}
           type="text" 
-          name="phone"
-          value={profileData.phone} 
-          onChange={handleChange}
-          />
-        </Form.Group>
-
-        <Form.Group controlId="formwebsite" className="mb-3">
-          <Form.Label>Suite</Form.Label>
-          <Form.Control 
-          style={{ backgroundColor: '#e6ebf5' }}
-          type="text"
-          name="website"
-          value={profileData.website} 
+          name="email"
+          value={profileData.email} 
           onChange={handleChange}
           />
         </Form.Group>

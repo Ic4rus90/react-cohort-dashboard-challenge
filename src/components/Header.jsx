@@ -7,7 +7,7 @@ import { UserContext } from "../App";
 const Header = () => {
 
     const { userDetails } = useContext(UserContext);
-
+    
     return (
         <header className="header">
             <div className="header-left">

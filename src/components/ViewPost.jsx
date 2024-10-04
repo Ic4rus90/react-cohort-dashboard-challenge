@@ -12,6 +12,7 @@ const ViewPost = () => {
     const [comments, setComments] = useState([]);
     const [contact, setContact] = useState(null);
     const [post, setPost] = useState(null);
+    const [viewAllComments, setViewAllComments] = useState(false);
 
     const { id } = useParams();
     const { posts } = useContext(PostContext);
@@ -46,7 +47,7 @@ const ViewPost = () => {
                 .get(`https://boolean-uk-api-server.fly.dev/Ic4rus90/post/${post.id}/comment`)
                 .then(res => {
                     if (res.data) {
-                        setComments(res.data);
+                        setComments(res.data.reverse());
                     } else {
                         console.error("No comments received");
                     }
@@ -57,6 +58,10 @@ const ViewPost = () => {
 
     if (!post || !contact) {
         return <div>Loading...</div>;
+    }
+
+    const handleGetAllComments = () => {
+        setViewAllComments(true)
     }
 
     return (
@@ -79,13 +84,24 @@ const ViewPost = () => {
                     {post.content}
                 </Card.Text>
                 <ul className="d-flex flex-column" style={{ gap: '2px' }}>
-                    
-                    {comments.map((comment, i) => (
+                    {comments.length < 4 || viewAllComments ? 
+                    comments.map((comment, i) => (
                         <PostListComment
                             comment={comment}
                             key={i}
                         />
-                    ))}
+                    ))
+                    : 
+                    <div>
+                    <button onClick={handleGetAllComments}> Show previous posts </button>
+                        {comments.slice(0, 3).map((comment, i) => (
+                            <PostListComment
+                                comment={comment}
+                                key={i}
+                            />
+                        ))}
+                    </div>
+                }
                 </ul>
                 <AddComment id={post.id} />
             </Card.Body>

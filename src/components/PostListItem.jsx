@@ -9,8 +9,9 @@ import { ContactContext } from "../App"
 import { Link } from "react-router-dom";
 
 const PostListItem = ({ post }) => {
-    const [comments, setComments] = useState([])
-    const [contact, setContact] = useState(null) 
+    const [comments, setComments] = useState([]);
+    const [contact, setContact] = useState(null);
+    const [viewAllComments, setViewAllComments] = useState(false);
 
     const { contacts } = useContext(ContactContext);
 
@@ -24,7 +25,6 @@ const PostListItem = ({ post }) => {
         }
     }, [post, contacts]);
     
-
     // Retrieving comments to specific post. Don't see a better way of doing this.
     useEffect(() => {
         if (contact && contact.id) {
@@ -43,6 +43,10 @@ const PostListItem = ({ post }) => {
     
     if (!post || !contact) {
         return <div>Loading...</div>;
+    }
+
+    const handleGetAllComments = () => {
+        setViewAllComments(true)
     }
 
     return (
@@ -65,12 +69,24 @@ const PostListItem = ({ post }) => {
                   {post.content}
                 </Card.Text>
                 <ul className="d-flex flex-column" style={{ gap: '2px' }}>
-                    {comments.map((comment, i) => (
-                            <PostListComment 
-                            comment={comment} 
+                {comments.length < 4 || viewAllComments ? 
+                    comments.map((comment, i) => (
+                        <PostListComment
+                            comment={comment}
                             key={i}
+                        />
+                    ))
+                    : 
+                    <div>
+                    <button onClick={handleGetAllComments}> Show previous comments </button>
+                        {comments.slice(0, 3).map((comment, i) => (
+                            <PostListComment
+                                comment={comment}
+                                key={i}
                             />
-                    ))}
+                        ))}
+                    </div>
+                }
                 </ul>
                 <AddComment id={contact.id} />
               </Card.Body>

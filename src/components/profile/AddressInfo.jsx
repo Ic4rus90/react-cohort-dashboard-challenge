@@ -18,17 +18,6 @@ const AddressInfo = ({ handleChange, profileData}) => {
           />
         </Form.Group>
 
-        <Form.Group controlId="formSuite" className="mb-3">
-          <Form.Label>Suite</Form.Label>
-          <Form.Control 
-          style={{ backgroundColor: '#e6ebf5' }}
-          type="text"
-          name="suite"
-          value={profileData.suite} 
-          onChange={handleChange}
-          />
-        </Form.Group>
-
         <Form.Group controlId="formCity" className="mb-3">
           <Form.Label>City</Form.Label>
           <Form.Control 
@@ -40,13 +29,24 @@ const AddressInfo = ({ handleChange, profileData}) => {
           />
         </Form.Group>
 
-        <Form.Group controlId="formZipCode" className="mb-3">
-          <Form.Label>Username*</Form.Label>
+        <Form.Group controlId="formLatitude" className="mb-3">
+          <Form.Label>Latitude</Form.Label>
           <Form.Control 
           style={{ backgroundColor: '#e6ebf5' }}
           type="text"
-          name="zipCode"
-          value={profileData.zipCode} 
+          name="latitude"
+          value={profileData.latitude} 
+          onChange={handleChange}
+          />
+        </Form.Group>
+
+        <Form.Group controlId="formLongitude" className="mb-3">
+          <Form.Label>Longitude</Form.Label>
+          <Form.Control 
+          style={{ backgroundColor: '#e6ebf5' }}
+          type="text"
+          name="longitude"
+          value={profileData.longitude} 
           onChange={handleChange}
           />
         </Form.Group>
