@@ -40,7 +40,7 @@ function App() {
     axios
     .get('https://boolean-uk-api-server.fly.dev/Ic4rus90/post')
     .then(res => {
-        setPosts(res.data); 
+        setPosts(res.data.reverse()); 
       });
     }, [])
 

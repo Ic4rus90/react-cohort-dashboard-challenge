@@ -1,7 +1,9 @@
-const Icon = ({ contact }) => {    
+const Icon = ({ contact }) => {  
+     
     const firstName = contact.firstName;
     const lastName = contact.lastName;
     const favouriteColor = contact.favouriteColour;
+    const id = contact.id;
 
     const initials = `${firstName.charAt(0)}${lastName.charAt(0)}`;
 

@@ -79,6 +79,7 @@ const ViewPost = () => {
                     {post.content}
                 </Card.Text>
                 <ul className="d-flex flex-column" style={{ gap: '2px' }}>
+                    
                     {comments.map((comment, i) => (
                         <PostListComment
                             comment={comment}
