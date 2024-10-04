@@ -1,7 +1,8 @@
 import axios from "axios";
-import { useState } from "react";
-import { InputGroup, FormControl, Button, Card } from 'react-bootstrap';
+import { useContext, useState } from "react";
+import { InputGroup, FormControl, Button } from 'react-bootstrap';
 import Icon from "./profile/Icon";
+import { UserContext } from "../App";
 
 const AddComment = ({ id }) => {
     const [comment, setComment] = useState({
@@ -9,6 +10,8 @@ const AddComment = ({ id }) => {
         "content": "",
         "contactId": 420
     })
+
+    const { userDetails } = useContext(UserContext)
 
     const handleSubmit = () => {
         console.log(comment)
@@ -27,7 +30,7 @@ const AddComment = ({ id }) => {
     return (
         <InputGroup className="mb-3" >
             <InputGroup.Text>
-                <Icon />
+                <Icon contact={userDetails}/>
             </InputGroup.Text>
             <FormControl
                 style={{ backgroundColor: '#e6ebf5' }}

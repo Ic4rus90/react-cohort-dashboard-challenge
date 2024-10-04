@@ -1,7 +1,6 @@
 import { useContext } from "react";
-import { ContactContext, PostContext } from "../App";
+import { PostContext } from "../App";
 import PostListItem from "./PostListItem";
-import AddComment from "./AddComment";
 import CreatePost from "./CreatePost";
 
 const PostList = () => {

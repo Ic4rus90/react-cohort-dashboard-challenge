@@ -1,9 +1,12 @@
 import axios from "axios";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { InputGroup, FormControl, Button, Card } from 'react-bootstrap';
 import Icon from "./profile/Icon";
+import { UserContext } from "../App";
 
 const CreatePost = () => {
+    const { userDetails } = useContext(UserContext)
+    
     const [post, setPost] = useState({
         "title": "Nothing special",
         "content": "",
@@ -11,7 +14,6 @@ const CreatePost = () => {
     })
 
     const handleSubmit = () => {
-        console.log(post)
         axios
         .post(`https://boolean-uk-api-server.fly.dev/Ic4rus90/post`, post)
         .then((res) => console.log(res))
@@ -28,7 +30,7 @@ const CreatePost = () => {
             <Card.Body>
             <InputGroup className="mb-3" >
                 <InputGroup.Text>
-                    <Icon />
+                    <Icon contact={userDetails}/>
                 </InputGroup.Text>
                 <FormControl
                     style={{ backgroundColor: '#e6ebf5' }}

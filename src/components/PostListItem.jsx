@@ -12,27 +12,13 @@ const PostListItem = ({ post }) => {
     const [contact, setContact] = useState({
         "firstName": "",
         "lastName": "",
-        "favouriteColor": ""
+        "favouriteColor": "",
+        "id" : 0
     })
 
     const { contacts } = useContext(ContactContext);
 
-    const id = post.id;
-
-    useEffect(() => {
-        axios
-        .get(`https://boolean-uk-api-server.fly.dev/Ic4rus90/post/${id}/comment`)
-        .then(res => {
-            if (res.data) {
-                setComments(res.data)
-            } else {
-                console.error("No contact data received");
-            }
-        })
-        .catch((err) => console.error("An error occurred when getting comments: ", err))
-    }, [id])
-
-
+    // Find user who made the post. 
     useEffect(() => { 
         const contact = contacts.find((contact) => contact.id === post.contactId)
         if (contact !== undefined) {
@@ -40,8 +26,24 @@ const PostListItem = ({ post }) => {
         }
     }, [post, contacts]);
 
+    // Retrieving comments to specific post. Don't see a better way of doing this.
+    useEffect(() => {
+        axios
+        .get(`https://boolean-uk-api-server.fly.dev/Ic4rus90/post/${contact.id}/comment`)
+        .then(res => {
+            if (res.data) {
+                setComments(res.data)
+            } else {
+                console.error("No comments received");
+            }
+        })
+        .catch((err) => console.error("An error occurred when getting comments: ", err))
+    }, [contact])
+
+
+
     return (
-            <Card >
+            <Card>
               <Card.Body>
                 <div className="d-flex align-items-center">  
                     <Icon contact={contact}/> 
@@ -65,7 +67,7 @@ const PostListItem = ({ post }) => {
                             />
                     ))}
                 </ul>
-                <AddComment id={id} />
+                <AddComment id={contact.id} />
               </Card.Body>
             </Card>
           );
